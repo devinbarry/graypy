@@ -1,5 +1,5 @@
 import json
-from amqplib import client_0_8 as amqp
+import amqp
 from graypy.handler import make_message_dict
 from logging import Filter
 from logging.handlers import SocketHandler

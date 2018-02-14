@@ -16,7 +16,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    extras_require={'amqp': ['amqplib==1.0.2']},
+    extras_require={'amqp': ['amqp==2.2.2']},
     classifiers=['License :: OSI Approved :: BSD License',
                  'Programming Language :: Python :: 2',
                  'Programming Language :: Python :: 3'],
