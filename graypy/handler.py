@@ -1,5 +1,4 @@
 import datetime
-import sys
 import logging
 import json
 import zlib
@@ -10,18 +9,13 @@ import socket
 import math
 from logging.handlers import DatagramHandler, SocketHandler
 
-PY3 = sys.version_info[0] == 3
 WAN_CHUNK, LAN_CHUNK = 1420, 8154
+data, text = bytes, str
 
-if PY3:
-    data, text = bytes, str
-else:
-    data, text = str, unicode
 
 class BaseGELFHandler(object):
-    def __init__(self, host, port=12201, chunk_size=WAN_CHUNK,
-            debugging_fields=True, extra_fields=True, fqdn=False,
-            localname=None, facility=None, level_names=False, compress=True):
+    def __init__(self, host, port=12201, chunk_size=WAN_CHUNK, debugging_fields=True, extra_fields=True, fqdn=False,
+                 localname=None, facility=None, level_names=False, compress=True):
         self.debugging_fields = debugging_fields
         self.extra_fields = extra_fields
         self.chunk_size = chunk_size
@@ -38,7 +32,6 @@ class BaseGELFHandler(object):
         packed = message_to_pickle(message_dict)
         frame = zlib.compress(packed) if self.compress else packed
         return frame
-
 
 
 class GELFHandler(BaseGELFHandler, DatagramHandler):
@@ -61,9 +54,8 @@ class GELFHandler(BaseGELFHandler, DatagramHandler):
         of numerical values. Defaults to False
     :param compress: Use message compression. Defaults to True
     """
-    def __init__(self, host, port=12201, chunk_size=WAN_CHUNK,
-            debugging_fields=True, extra_fields=True, fqdn=False,
-            localname=None, facility=None, level_names=False, compress=True):
+    def __init__(self, host, port=12201, chunk_size=WAN_CHUNK, debugging_fields=True, extra_fields=True, fqdn=False,
+                 localname=None, facility=None, level_names=False, compress=True):
         BaseGELFHandler.__init__(self, host, port, chunk_size,
                                  debugging_fields, extra_fields, fqdn,
                                  localname, facility, level_names, compress)
@@ -176,6 +168,7 @@ def make_message_dict(record, debugging_fields, extra_fields, fqdn, localname,
     if extra_fields:
         fields = add_extra_fields(fields, record)
     return fields
+
 
 SYSLOG_LEVELS = {
     logging.CRITICAL: 2,
